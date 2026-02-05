@@ -17,19 +17,19 @@ const investments = [
   {
     name: "Source.",
     logo: "/logos/source.png",
-    description: "Developer tools and infrastructure",
+    description: "A new way to use AI in shopping",
     url: "#",
   },
   {
     name: "Strive",
     logo: "/logos/strive.png",
-    description: "Corporate governance solutions",
+    description: "A precision health service",
     url: "#",
   },
   {
     name: "Kausable",
     logo: "/logos/kausable.png",
-    description: "Impact measurement platform",
+    description: "AI - done differently",
     url: "#",
   },
   {
@@ -47,13 +47,13 @@ const investments = [
   {
     name: "E14 Invest",
     logo: "/logos/e14invest.png",
-    description: "Real estate investment",
+    description: "Investing outside the mainstream",
     url: "#",
   },
   {
     name: "Jord",
     logo: "/logos/jord.png",
-    description: "Sustainable land management",
+    description: "The Fiber revolution",
     url: "#",
   },
   {
