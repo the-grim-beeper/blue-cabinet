@@ -8,6 +8,7 @@ const founders = [
     image: "/nicklas.webp",
     bio: "Nicklas brings deep experience from the intersection of technology and policy. He has held senior roles at Google, where he led public policy across Europe, and at DeepMind, where he worked on AI governance. Most recently, he served at Stripe, focusing on financial regulation and fintech policy. His unique perspective bridges the worlds of cutting-edge technology and the regulatory frameworks that shape them.",
     companies: ["Google", "DeepMind", "Stripe"],
+    linkedin: "#",
   },
   {
     name: "Andreas Krohn",
@@ -15,6 +16,7 @@ const founders = [
     image: "/andreas.jpg",
     bio: "Andreas is an experienced serial entrepreneur with a track record of building and scaling successful companies. His hands-on operational experience gives Blue Cabinet a founder's perspective on what it takes to build from zero to one. He brings practical insight into company building, go-to-market strategy, and the challenges founders face at every stage of growth.",
     companies: [],
+    linkedin: "#",
   },
 ];
 
@@ -85,46 +87,53 @@ export default function TeamPage() {
         {/* Founders */}
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-6">
-            <div className="space-y-20">
+            <div className="space-y-24">
               {founders.map((founder, index) => (
                 <div
                   key={founder.name}
-                  className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                  className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
                     index % 2 === 1 ? "lg:flex-row-reverse" : ""
                   }`}
                 >
                   <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                    <div className="relative aspect-square max-w-md mx-auto lg:mx-0 overflow-hidden rounded-2xl">
-                      <Image
-                        src={founder.image}
-                        alt={founder.name}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className="relative max-w-md mx-auto lg:mx-0">
+                      {/* Decorative background */}
+                      <div className="absolute -inset-4 bg-gradient-to-br from-accent-primary/5 to-transparent rounded-3xl" />
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
+                        <Image
+                          src={founder.image}
+                          alt={founder.name}
+                          fill
+                          className="object-cover"
+                        />
+                        {/* Subtle overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </div>
+                      {/* Company badges positioned over image */}
+                      {founder.companies.length > 0 && (
+                        <div className="absolute -bottom-4 left-4 right-4 flex justify-center gap-2">
+                          {founder.companies.map((company) => (
+                            <span
+                              key={company}
+                              className="px-4 py-2 text-sm bg-white text-accent-primary rounded-full shadow-md font-medium"
+                            >
+                              {company}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className={index % 2 === 1 ? "lg:order-1" : ""}>
+                  <div className={`${index % 2 === 1 ? "lg:order-1" : ""} ${founder.companies.length > 0 ? "lg:pt-0 pt-8" : ""}`}>
                     <p className="text-xs uppercase tracking-[0.2em] text-accent-primary font-sans font-semibold mb-2">
                       {founder.role}
                     </p>
-                    <h2 className="text-3xl font-serif font-bold text-text-primary mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-serif font-bold text-text-primary mb-6">
                       {founder.name}
                     </h2>
-                    <p className="text-text-secondary leading-relaxed mb-6">
+                    <p className="text-text-secondary leading-relaxed text-lg">
                       {founder.bio}
                     </p>
-                    {founder.companies.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {founder.companies.map((company) => (
-                          <span
-                            key={company}
-                            className="px-3 py-1 text-sm bg-accent-muted text-accent-primary rounded-full"
-                          >
-                            {company}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
@@ -133,7 +142,7 @@ export default function TeamPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16 border-t border-border bg-bg-secondary">
           <div className="max-w-5xl mx-auto px-6 text-center">
             <p className="text-lg text-text-secondary mb-6">
               Want to work with us?

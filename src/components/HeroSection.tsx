@@ -1,8 +1,138 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 export default function HeroSection() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+    let nodes: { x: number; y: number; vx: number; vy: number; type: "policy" | "tech" | "intersection" }[] = [];
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+
+    const initNodes = () => {
+      nodes = [];
+      const width = canvas.offsetWidth;
+      const height = canvas.offsetHeight;
+
+      // Create nodes
+      for (let i = 0; i < 25; i++) {
+        const type = i < 8 ? "policy" : i < 16 ? "tech" : "intersection";
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          type,
+        });
+      }
+    };
+
+    const animate = () => {
+      const width = canvas.offsetWidth;
+      const height = canvas.offsetHeight;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Update positions
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+      });
+
+      // Draw connections
+      ctx.strokeStyle = "rgba(30, 58, 95, 0.08)";
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 150) {
+            const opacity = (1 - dist / 150) * 0.15;
+
+            // Highlight connections between different types
+            if (nodes[i].type !== nodes[j].type) {
+              ctx.strokeStyle = `rgba(30, 58, 95, ${opacity * 2})`;
+            } else {
+              ctx.strokeStyle = `rgba(30, 58, 95, ${opacity})`;
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      nodes.forEach((node) => {
+        ctx.beginPath();
+
+        let radius = 3;
+        let color = "rgba(30, 58, 95, 0.3)";
+
+        if (node.type === "policy") {
+          color = "rgba(30, 58, 95, 0.4)";
+          radius = 4;
+        } else if (node.type === "tech") {
+          color = "rgba(44, 82, 130, 0.4)";
+          radius = 4;
+        } else {
+          color = "rgba(30, 58, 95, 0.7)";
+          radius = 6;
+        }
+
+        ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    resize();
+    initNodes();
+    animate();
+
+    window.addEventListener("resize", () => {
+      resize();
+      initNodes();
+    });
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-bg-secondary">
-      {/* Subtle top border accent */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/20 to-transparent" />
+    <section className="relative min-h-screen flex items-center justify-center bg-bg-secondary overflow-hidden">
+      {/* Animated network background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ opacity: 0.7 }}
+      />
+
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-bg-secondary via-transparent to-bg-secondary pointer-events-none" />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center pt-20">
         <p className="text-xs uppercase tracking-[0.3em] text-accent-light font-sans font-semibold mb-8">
@@ -39,7 +169,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <svg
           width="20"
           height="20"

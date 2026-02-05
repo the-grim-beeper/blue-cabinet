@@ -2,16 +2,66 @@ import Image from "next/image";
 import Link from "next/link";
 
 const investments = [
-  { name: "Warp News", logo: "/logos/warp-news.png" },
-  { name: "Civic Marketplace", logo: "/logos/civic-marketplace.png" },
-  { name: "Source.", logo: "/logos/source.png" },
-  { name: "Strive", logo: "/logos/strive.png" },
-  { name: "Kausable", logo: "/logos/kausable.png" },
-  { name: "FenoMark Diagnostics", logo: "/logos/fenomark.png" },
-  { name: "Besara", logo: "/logos/besara.png" },
-  { name: "E14 Invest", logo: "/logos/e14invest.png" },
-  { name: "Jord", logo: "/logos/jord.png" },
-  { name: "FitWise", logo: "/logos/fitwise.png" },
+  {
+    name: "Warp News",
+    logo: "/logos/warp-news.png",
+    description: "Fact-based optimistic news platform",
+    url: "https://warpnews.org",
+  },
+  {
+    name: "Civic Marketplace",
+    logo: "/logos/civic-marketplace.png",
+    description: "Procurement platform for public sector",
+    url: "https://civicmarketplace.com",
+  },
+  {
+    name: "Source.",
+    logo: "/logos/source.png",
+    description: "Developer tools and infrastructure",
+    url: "#",
+  },
+  {
+    name: "Strive",
+    logo: "/logos/strive.png",
+    description: "Corporate governance solutions",
+    url: "#",
+  },
+  {
+    name: "Kausable",
+    logo: "/logos/kausable.png",
+    description: "Impact measurement platform",
+    url: "#",
+  },
+  {
+    name: "FenoMark Diagnostics",
+    logo: "/logos/fenomark.png",
+    description: "Medical diagnostics technology",
+    url: "#",
+  },
+  {
+    name: "Besara",
+    logo: "/logos/besara.png",
+    description: "Accounting and business development",
+    url: "#",
+  },
+  {
+    name: "E14 Invest",
+    logo: "/logos/e14invest.png",
+    description: "Real estate investment",
+    url: "#",
+  },
+  {
+    name: "Jord",
+    logo: "/logos/jord.png",
+    description: "Sustainable land management",
+    url: "#",
+  },
+  {
+    name: "FitWise",
+    logo: "/logos/fitwise.png",
+    description: "Health and fitness technology",
+    url: "#",
+  },
 ];
 
 export const metadata = {
@@ -80,20 +130,40 @@ export default function PortfolioPage() {
         {/* Logo grid */}
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {investments.map((company) => (
-                <div
+                <a
                   key={company.name}
-                  className="border border-border rounded-xl p-6 flex items-center justify-center aspect-[4/3] hover:border-border-hover transition-colors bg-white"
+                  href={company.url}
+                  target={company.url !== "#" ? "_blank" : undefined}
+                  rel={company.url !== "#" ? "noopener noreferrer" : undefined}
+                  className="group border border-border rounded-xl p-6 hover:border-accent-primary/30 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300 bg-white"
                 >
-                  <Image
-                    src={company.logo}
-                    alt={company.name}
-                    width={180}
-                    height={100}
-                    className="object-contain max-h-20"
-                  />
-                </div>
+                  <div className="flex items-center justify-center h-24 mb-4">
+                    <Image
+                      src={company.logo}
+                      alt={company.name}
+                      width={160}
+                      height={80}
+                      className="object-contain max-h-16 group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-text-primary mb-1">
+                      {company.name}
+                    </h3>
+                    <p className="text-sm text-text-secondary">
+                      {company.description}
+                    </p>
+                  </div>
+                  {company.url !== "#" && (
+                    <div className="mt-3 text-center">
+                      <span className="text-xs text-accent-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                        Visit website &rarr;
+                      </span>
+                    </div>
+                  )}
+                </a>
               ))}
             </div>
           </div>
