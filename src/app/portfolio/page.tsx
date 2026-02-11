@@ -62,6 +62,12 @@ const investments = [
     description: "Health and fitness technology",
     url: "#",
   },
+  {
+    name: "Belong",
+    logo: "/logos/belong.png",
+    description: "Inspiring a new generation of savvy, long-term thinkers, committed to building sustainable wealth for our future selves",
+    url: "#",
+  },
 ];
 
 export const metadata = {
@@ -122,7 +128,7 @@ export default function PortfolioPage() {
             </h1>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
               We back founders building at the intersection of public policy and
-              technology. Here are the companies we are proud to support.
+              technology. Here are some of the companies we are proud to support.
             </p>
           </div>
         </section>
