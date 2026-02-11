@@ -68,6 +68,12 @@ const investments = [
     description: "Inspiring a new generation of savvy, long-term thinkers, committed to building sustainable wealth for our future selves",
     url: "#",
   },
+  {
+    name: "Proxima Fusion",
+    logo: "/logos/proxima-fusion.png",
+    description: "Building stellarators to power the future",
+    url: "#",
+  },
 ];
 
 export const metadata = {
