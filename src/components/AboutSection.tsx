@@ -29,7 +29,7 @@ export default function AboutSection() {
         <SectionHeading
           label="About Us"
           heading="Investing in the Future of Governance"
-          description="Blue Cabinet is an angel investment firm founded on the conviction that the most transformative companies of the coming decade will emerge where public policy and technology converge."
+          description="Blue Cabinet is an angel investment firm founded in 2020 on the conviction that the most transformative companies of the coming decade will emerge where public policy and technology converge."
           center
         />
 
